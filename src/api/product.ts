@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Category, Product } from "../models";
 
 export const getProducts = async () => {
   const response = await axios.get("/products");
