@@ -12,37 +12,52 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { createProduct } from "../../../api/product";
+import { createProduct, deleteProduct } from "../../../api/product";
+import { Product } from "../../../models";
 
 export interface ProductDialogProps {
   open: boolean;
-  selectedValue?: string;
-  afterSubmit?: () => void;
+  afterSubmit?: (product: Product) => void;
+  afterDelete?: (product: Product) => void;
   onCancel?: () => void;
+  product?: Product;
 }
 
 export function ProductDialog(props: ProductDialogProps) {
-  const { onCancel, afterSubmit, open } = props;
+  const { onCancel, afterSubmit, open, product, afterDelete } = props;
 
   const [category, setCategory] = React.useState<string>();
   const [name, setName] = React.useState<string>();
-  const [price, setPrice] = React.useState<string>();
+  const [price, setPrice] = React.useState<Number>();
   const [description, setDescription] = React.useState<string>();
   const [vatRate, setVat] = React.useState<number>(19);
+  const [id, setId] = React.useState<number>();
 
-  const handleClose = () => {
-    //onClose(selectedValue);
-  };
+  React.useEffect(() => {
+    setName(product?.name);
+    setCategory(product?.category);
+    setPrice(Number(product?.price));
+    setDescription(product?.description);
+    setId(product?.id);
+  }, [props.product]);
 
   const handleListItemClick = (value: SelectChangeEvent) => {
-    // onClose(value);
     setCategory(value.target.value);
   };
 
-  const create = async () => {
-    //onClose(selectedValue);
+  const deleting = async () => {
+    if (product) {
+      await deleteProduct(product);
 
-    const product = {
+      if (typeof afterDelete === "function") {
+        afterDelete(product);
+      }
+    }
+  };
+
+  const create = async () => {
+    const productToCreate = {
+      id,
       name,
       description,
       price,
@@ -50,15 +65,15 @@ export function ProductDialog(props: ProductDialogProps) {
       category,
     };
 
-    console.log(product);
-
-    await createProduct(product);
-    //afterSubmit();
+    const response = await createProduct(productToCreate);
+    if (typeof afterSubmit === "function") {
+      afterSubmit(response);
+    }
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>New Product</DialogTitle>
+    <Dialog open={open}>
+      <DialogTitle>{product?.id ? "Edit" : "Create"} Product</DialogTitle>
 
       <DialogContent>
         <FormControl fullWidth sx={{ mt: 2 }}>
@@ -80,6 +95,18 @@ export function ProductDialog(props: ProductDialogProps) {
         <TextField
           autoFocus
           margin="dense"
+          id="id"
+          label="Id"
+          type="number"
+          fullWidth
+          variant="standard"
+          value={id}
+          onChange={(event) => setId(Number(event.target.value))}
+        />
+
+        <TextField
+          autoFocus
+          margin="dense"
           id="name"
           label="Name"
           type="text"
@@ -97,7 +124,11 @@ export function ProductDialog(props: ProductDialogProps) {
           fullWidth
           variant="standard"
           value={price}
-          onChange={(event) => setPrice(event.target.value)}
+          onChange={(event) =>
+            setPrice(
+              event.target.value ? Number(event.target.value) : undefined
+            )
+          }
         />
         <TextField
           autoFocus
@@ -123,6 +154,9 @@ export function ProductDialog(props: ProductDialogProps) {
         />
       </DialogContent>
       <DialogActions>
+        <Button onClick={deleting} sx={{ mr: 5 }}>
+          Delete
+        </Button>
         <Button onClick={onCancel}>Cancel</Button>
         <Button onClick={create}>Create</Button>
       </DialogActions>

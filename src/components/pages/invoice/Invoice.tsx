@@ -1,5 +1,5 @@
 import { useGlobalState } from "../../../context/globalContext";
-import withRoot from "../../hocs/WithRoute";
+import withRoot from "../../hocs/withRoot";
 import "./invoice.css";
 
 const InvoiceComp = () => {

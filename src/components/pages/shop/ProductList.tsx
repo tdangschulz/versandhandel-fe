@@ -7,16 +7,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
-import withRoot from "../../hocs/WithRoute";
-import ShoppingCart from "../ShoppingCart/ShopingCart";
-import { useGlobalState } from "../../../context/globalContext";
-import { Product } from "../../../models";
 import { getProducts } from "../../../api/product";
+import { Product } from "../../../models";
+import withRoot from "../../hocs/withRoot";
 import { ProductDialog } from "./ProductDialog";
 
 const ProductDetails: React.FC = () => {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [showDialog, setShowDialog] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState<Product>();
 
   React.useEffect(() => {
     const fetch = async () => {
@@ -27,12 +26,43 @@ const ProductDetails: React.FC = () => {
   }, []);
 
   const addProduct = () => {
+    setSelectedProduct(undefined);
     setShowDialog(true);
+  };
+
+  const afterSubmit = (product: Product) => {
+    const index = products.findIndex((p) => p.id === product.id);
+    if (index > 0) {
+      products[index] = product;
+    } else {
+      products.push(product);
+    }
+
+    setProducts(products);
+    setShowDialog(false);
+    setSelectedProduct(undefined);
+  };
+
+  const afterDelete = (product: Product) => {
+    const index = products.findIndex((p) => p.id === product.id);
+    delete products[index];
+    setProducts(products.filter(Boolean));
+    setSelectedProduct(undefined);
+    setShowDialog(false);
   };
 
   return (
     <>
-      <ProductDialog open={showDialog}></ProductDialog>
+      <ProductDialog
+        product={selectedProduct}
+        open={showDialog}
+        afterSubmit={afterSubmit}
+        afterDelete={afterDelete}
+        onCancel={() => {
+          setSelectedProduct(undefined);
+          setShowDialog(false);
+        }}
+      ></ProductDialog>
       <Grid container justifyContent="flex-end">
         <Button onClick={addProduct} sx={{ mb: 1 }}>
           New
@@ -45,7 +75,9 @@ const ProductDetails: React.FC = () => {
                   <TableCell align="left">Id</TableCell>
                   <TableCell align="left">Product</TableCell>
                   <TableCell align="left">Description</TableCell>
-                  <TableCell align="right">Price</TableCell>
+                  <TableCell sx={{ width: 100 }} align="right">
+                    Price
+                  </TableCell>
                   <TableCell align="right"></TableCell>
                 </TableRow>
               </TableHead>
@@ -70,7 +102,14 @@ const ProductDetails: React.FC = () => {
                     </TableCell>
                     <TableCell align="right">{row.price} €</TableCell>
                     <TableCell padding="checkbox">
-                      <Button onClick={() => addProduct(row)}>Edit</Button>
+                      <Button
+                        onClick={() => {
+                          setSelectedProduct(row);
+                          setShowDialog(true);
+                        }}
+                      >
+                        Edit
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

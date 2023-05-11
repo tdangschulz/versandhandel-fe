@@ -1,4 +1,4 @@
-import withRoot from "../../hocs/WithRoute";
+import withRoot from "../../hocs/withRoot";
 import InvoiceList from "./InvoiceList";
 
 const CustomerInvoice = () => {

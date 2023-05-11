@@ -10,7 +10,7 @@ import * as React from "react";
 import { getProducts } from "../../../api/product";
 import { useGlobalState } from "../../../context/globalContext";
 import { Product } from "../../../models";
-import withRoot from "../../hocs/WithRoute";
+import withRoot from "../../hocs/withRoot";
 import ShoppingCart from "../ShoppingCart/ShopingCart";
 import theme from "../../commons/theme";
 
