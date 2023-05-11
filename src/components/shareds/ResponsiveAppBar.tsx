@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../context/globalContext";
 
 const pages = [
-  { title: "Shop", target: "/shop" },
+  { title: "Shop", target: "/shop", isUser: true },
   { title: "Products", target: "/products", isAdmin: true },
 ];
 const settings = ["Profile", "Invoices", "Logout"];
@@ -137,7 +137,8 @@ function ResponsiveAppBar() {
             {pages
               .filter(
                 (page) =>
-                  (page.isAdmin && state.userInfo?.isAdmin) || !page.isAdmin
+                  (page.isAdmin && state.userInfo?.isAdmin) ||
+                  (page.isUser && !state.userInfo?.isAdmin)
               )
               .map((page) => (
                 <Button
