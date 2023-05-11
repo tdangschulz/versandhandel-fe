@@ -1,18 +1,24 @@
 import * as React from "react";
 import { ShoppingItem } from "../models";
 
-export type DefaultGlobalState = {
-  userInfo?: {
-    auth?: string;
-    name: string;
-    isAdmin: boolean;
-    address: {
-      street: string;
-      zipCode: string;
-      city: string;
-      email: string;
-    };
+export type Profile = {
+  auth?: string;
+  password?: string;
+  name: string;
+  lastName?: string;
+  isAdmin: boolean;
+  address: {
+    street: string;
+    zipCode: string;
+    city: string;
+    email: string;
+    houseNo: number;
+    residence: string;
   };
+};
+
+export type DefaultGlobalState = {
+  userInfo?: Profile;
   shoppingCart: {
     shipping: number;
     total: number;

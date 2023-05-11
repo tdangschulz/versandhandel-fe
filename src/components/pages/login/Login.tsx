@@ -43,11 +43,14 @@ export const LoginPage: React.FC = () => {
     let user;
     if (userId && password) {
       localStorage.setItem("auth", window.btoa(`${userId}:${password}`));
+      localStorage.setItem("userId", userId);
+
       user = await getAdminInfo(userId.toString());
 
       navigate("/products");
     } else if (userId) {
       localStorage.setItem("auth", window.btoa(`${userId}:`));
+      localStorage.setItem("userId", userId);
       user = await getUserInfo(userId.toString());
     }
 
@@ -62,6 +65,8 @@ export const LoginPage: React.FC = () => {
             street: user.street,
             zipCode: user.zipCode,
             email: user.email,
+            houseNo: user.houseNo,
+            residence: user.residence,
           },
         },
       });

@@ -32,12 +32,16 @@ export default function withAuth<P extends JSX.IntrinsicAttributes>(
               ...state,
               userInfo: {
                 name: user.firstName,
+                lastName: user.lastName,
                 isAdmin,
+                password: user.password,
                 address: {
                   city: user.residence,
                   street: user.street,
                   zipCode: user.zipCode,
                   email: user.email,
+                  houseNo: user.houseNo,
+                  residence: user.residence,
                 },
               },
             });
