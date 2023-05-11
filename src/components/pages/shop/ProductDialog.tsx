@@ -78,6 +78,7 @@ export function ProductDialog(props: ProductDialogProps) {
       <DialogContent>
         <FormControl fullWidth sx={{ mt: 2 }}>
           <InputLabel id="demo-simple-select-label">Category</InputLabel>
+
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -85,6 +86,7 @@ export function ProductDialog(props: ProductDialogProps) {
             label="Category"
             onChange={handleListItemClick}
             variant="standard"
+            defaultValue={product?.category}
           >
             <MenuItem value={"CAR"}>Auto</MenuItem>
             <MenuItem value={"ACCESSORIES"}>Zubehoer</MenuItem>
