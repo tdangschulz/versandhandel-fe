@@ -4,7 +4,7 @@ import { Profile } from "../context/globalContext";
 
 export const getUserInfo = async (userId: string) => {
   const response = await axios.get<User>("customers/" + userId);
-  return response.data;
+  return { ...response.data, id: Number(userId) };
 };
 
 export const getAdminInfo = async (userId: string) => {

@@ -23,6 +23,7 @@ export type DefaultGlobalState = {
   shoppingCart: {
     shipping: number;
     total: number;
+    priceWithoutVat: number;
     products: ShoppingItem[];
   };
 };
@@ -30,6 +31,7 @@ export type DefaultGlobalState = {
 export const defaultGlobalState = {
   shoppingCart: {
     total: 0,
+    priceWithoutVat: 0,
     shipping: 6,
     products: [],
   },

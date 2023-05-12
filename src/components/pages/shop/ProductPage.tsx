@@ -14,7 +14,7 @@ import withRoot from "../../hocs/withRoot";
 import ShoppingCart from "../ShoppingCart/ShopingCart";
 import theme from "../../commons/theme";
 
-const ProductPage: React.FC<Props> = () => {
+const ProductPage: React.FC = () => {
   const { state, dispatch } = useGlobalState();
   const [products, setProducts] = React.useState<Product[]>([]);
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -29,6 +29,8 @@ const ProductPage: React.FC<Props> = () => {
 
   const addProduct = (product: Product) => {
     state.shoppingCart.total += product.price;
+    state.shoppingCart.priceWithoutVat +=
+      (product.price * 100.0) / (100 + product.vatRate);
     const cartItem = state.shoppingCart.products.find(
       (p) => p.product.id === product.id
     );

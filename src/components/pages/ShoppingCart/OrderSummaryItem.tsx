@@ -9,7 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../../context/globalContext";
 import * as React from "react";
-import { ShoppingItem } from "../../../models";
+import { Invoice, ShoppingItem } from "../../../models";
+import { saveInvoice } from "../../../api/product";
 
 const useStyles = {
   root: {
@@ -31,12 +32,38 @@ export default function OrderSummaryItem() {
 
   const navigate = useNavigate();
 
-  const showInvoce = () => {
-    navigate("/checkout");
+  const showInvoce = async () => {
+    if (state.userInfo) {
+      const item = state.shoppingCart.products[0];
+      const invoce: Invoice = {
+        product: item.product,
+        customer: {
+          id: state.userInfo.id,
+          firstName: state.userInfo.firstName,
+          houseNo: state.userInfo.address.houseNo,
+          lastName: state.userInfo.lastName,
+          residence: state.userInfo.address.residence,
+          password: state.userInfo.password,
+          zipCode: state.userInfo.address.zipCode,
+          street: state.userInfo.address.street,
+        },
+        totalPrice: state.shoppingCart.total,
+        quantity: item.amount,
+        isPremiumCustomer: false,
+        priceWithoutVat: state.shoppingCart.priceWithoutVat,
+      };
+
+      await saveInvoice(invoce);
+
+      navigate("/checkout");
+    }
   };
 
   const deleteItem = (item: ShoppingItem) => {
     state.shoppingCart.total -= item.product.price;
+
+    state.shoppingCart.priceWithoutVat -=
+      (item.product.price * 100.0) / (100 + item.product.vatRate);
     const cartItem = state.shoppingCart.products
       .filter(Boolean)
       .find((p) => p.product.id === item.product.id);
@@ -92,6 +119,16 @@ export default function OrderSummaryItem() {
         </Grid>
         <hr />
         <Grid container>
+          <Grid item xs={11} sm={11} md={11} lg={9}>
+            <Typography variant="body1" component="div" align="left">
+              Netto
+            </Typography>
+          </Grid>
+          <Grid item xs={1} sm={1} md={1} lg={3}>
+            <Typography variant="h6" component="div" align="right">
+              {state.shoppingCart.priceWithoutVat.toFixed(2)} €
+            </Typography>
+          </Grid>
           <Grid item xs={11} sm={11} md={11} lg={9}>
             <Typography variant="body1" component="div" align="left">
               Total

@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@mui/material";
-import * as React from "react";
+import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
 const useStyles = {
   root: {

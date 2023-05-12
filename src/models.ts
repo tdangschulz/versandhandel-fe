@@ -4,6 +4,7 @@ export type Product = {
   id: number;
   description?: string;
   category?: Category;
+  vatRate: number;
 };
 
 export type ShoppingItem = {
@@ -18,22 +19,22 @@ export enum Category {
 }
 
 export type User = {
+  id?: number;
   firstName: string;
   houseNo: number;
-  lastName: string;
-  numberOfInstances: number;
-  password: string;
+  lastName?: string;
+  numberOfInstances?: number;
+  password?: string;
   residence: string;
   street: string;
   zipCode: string;
-  email: string;
 };
 
 export type Invoice = {
-  id: number;
-  product: string;
+  product: { id: number };
+  customer: User;
   quantity: number;
   totalPrice: number;
   priceWithoutVat: number;
-  premiumCustomer: boolean;
+  isPremiumCustomer: boolean;
 };
