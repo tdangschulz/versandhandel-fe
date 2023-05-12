@@ -22,13 +22,17 @@ const CustomersList: React.FC = () => {
     fetch();
   }, []);
 
-  const deleteUser = async (customerId: number) => {
-    await deleteCustomer(customerId);
+  const deleteUser = async (customerId?: number) => {
+    if (customerId) {
+      await deleteCustomer(customerId);
 
-    const index = customers.findIndex((customer) => customer.id === customerId);
-    delete customers[index];
+      const index = customers.findIndex(
+        (customer) => customer.id === customerId
+      );
+      delete customers[index];
 
-    setCustomers(customers.filter(Boolean));
+      setCustomers(customers.filter(Boolean));
+    }
   };
 
   return (
