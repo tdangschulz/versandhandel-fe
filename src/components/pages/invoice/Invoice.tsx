@@ -68,7 +68,11 @@ const InvoiceComp = () => {
               <td>{p.product.price * p.amount} €</td>
             </tr>
           ))}
-
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Netto: {state.shoppingCart.priceWithoutVat.toFixed(2)} €</td>
+          </tr>
           <tr className="total">
             <td></td>
             <td></td>
