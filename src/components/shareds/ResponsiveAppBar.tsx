@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
-import { useGlobalState } from "../../context/globalContext";
+import { Profile, useGlobalState } from "../../context/globalContext";
 import { ProfileDialog } from "../pages/ProfileDialog";
 
 const pages = [
@@ -70,9 +70,14 @@ function ResponsiveAppBar() {
     setShowDialog(false);
   };
 
+  const afterProfileSubmited = (profile: Profile) => {
+    setShowDialog(false);
+  };
+
   return (
     <>
       <ProfileDialog
+        afterSubmit={afterProfileSubmited}
         open={showDialog}
         onCancel={onCancel}
         profile={state.userInfo}

@@ -8,7 +8,9 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { Profile } from "../../context/globalContext";
+import { Profile, useGlobalState } from "../../context/globalContext";
+import { saveAdminProfile } from "../../api/userApi";
+import { mapUserInfo } from "../hocs/WithAuth";
 
 export interface ProfileDialogProps {
   open: boolean;
@@ -20,8 +22,8 @@ export interface ProfileDialogProps {
 
 export function ProfileDialog(props: ProfileDialogProps) {
   const { onCancel, afterSubmit, open, profile, afterDelete } = props;
-
-  const [name, setName] = React.useState<string>();
+  const { state, dispatch } = useGlobalState();
+  const [firstName, setFirstName] = React.useState<string>();
   const [street, setStreet] = React.useState<string>();
 
   const [houseNo, setHouseNo] = React.useState<Number>();
@@ -33,7 +35,14 @@ export function ProfileDialog(props: ProfileDialogProps) {
   const [id, setId] = React.useState<number>();
 
   React.useEffect(() => {
-    setName(profile?.name);
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      setId(Number(userId));
+    }
+  }, []);
+
+  React.useEffect(() => {
+    setFirstName(profile?.name);
     setStreet(profile?.address.street);
     setHouseNo(Number(profile?.address.houseNo));
     setLastName(profile?.lastName);
@@ -44,7 +53,31 @@ export function ProfileDialog(props: ProfileDialogProps) {
 
   const deleting = async () => {};
 
-  const create = async () => {};
+  const save = async () => {
+    let response;
+    if (state.userInfo?.isAdmin) {
+      response = await saveAdminProfile({
+        id,
+        firstName,
+        houseNo,
+        lastName,
+        residence,
+        password,
+        zipCode,
+        street,
+      });
+    }
+
+    if (typeof afterSubmit === "function" && dispatch && state.userInfo) {
+      const profile = mapUserInfo(response, state.userInfo.isAdmin);
+      dispatch({
+        ...state,
+        userInfo: profile,
+      });
+
+      afterSubmit(profile);
+    }
+  };
 
   return (
     <Dialog open={open}>
@@ -59,8 +92,8 @@ export function ProfileDialog(props: ProfileDialogProps) {
           type="text"
           fullWidth
           variant="standard"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          value={firstName}
+          onChange={(event) => setFirstName(event.target.value)}
         />
 
         <TextField
@@ -135,7 +168,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
           Delete
         </Button>
         <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={create}>Speichern</Button>
+        <Button onClick={save}>Speichern</Button>
       </DialogActions>
     </Dialog>
   );

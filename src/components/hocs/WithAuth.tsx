@@ -1,7 +1,24 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { useGlobalState } from "../../context/globalContext";
+import { Profile, useGlobalState } from "../../context/globalContext";
 import { getAdminInfo, getUserInfo } from "../../api/userApi";
+
+export function mapUserInfo(user: any, isAdmin: boolean): Profile {
+  return {
+    name: user.firstName,
+    lastName: user.lastName,
+    isAdmin,
+    password: user.password,
+    address: {
+      city: user.residence,
+      street: user.street,
+      zipCode: user.zipCode,
+      email: user.email,
+      houseNo: user.houseNo,
+      residence: user.residence,
+    },
+  };
+}
 
 export default function withAuth<P extends JSX.IntrinsicAttributes>(
   Component: React.ComponentType<P>
@@ -30,20 +47,7 @@ export default function withAuth<P extends JSX.IntrinsicAttributes>(
           if (dispatch && user) {
             dispatch({
               ...state,
-              userInfo: {
-                name: user.firstName,
-                lastName: user.lastName,
-                isAdmin,
-                password: user.password,
-                address: {
-                  city: user.residence,
-                  street: user.street,
-                  zipCode: user.zipCode,
-                  email: user.email,
-                  houseNo: user.houseNo,
-                  residence: user.residence,
-                },
-              },
+              userInfo: mapUserInfo(user, isAdmin),
             });
           }
         };
