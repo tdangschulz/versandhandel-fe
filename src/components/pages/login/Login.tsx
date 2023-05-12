@@ -58,7 +58,7 @@ export const LoginPage: React.FC = () => {
       dispatch({
         ...state,
         userInfo: {
-          name: user.firstName,
+          firstName: user.firstName,
           isAdmin: false,
           address: {
             city: user.residence,

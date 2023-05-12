@@ -5,6 +5,7 @@ import { LoginPage } from "../components/pages/login/Login";
 import withAuth from "../components/hocs/WithAuth";
 import CustomerInvoice from "../components/pages/invoice/CustomerInvoice";
 import ProductList from "../components/pages/shop/ProductList";
+import CustomersList from "../components/pages/user/CustomersList";
 
 export const router = createBrowserRouter([
   {
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
   {
     path: "/products",
     Component: withAuth(ProductList),
+  },
+  {
+    path: "/customers",
+    Component: withAuth(CustomersList),
   },
 ]);

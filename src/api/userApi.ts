@@ -16,3 +16,12 @@ export const saveAdminProfile = async (profile: any) => {
   const response = await axios.post<Profile>("administrators", profile);
   return response.data;
 };
+
+export const getCustomers = async () => {
+  const response = await axios.get<Profile[]>("customers");
+  return response.data;
+};
+
+export const deleteCustomer = async (customerId: number) => {
+  await axios.delete("customers/" + customerId);
+};

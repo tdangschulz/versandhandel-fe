@@ -36,7 +36,7 @@ const InvoiceComp = () => {
               <table>
                 <tr>
                   <td>
-                    {state.userInfo?.name}
+                    {state.userInfo?.firstName}
                     <br />
                     {state.userInfo?.address.street}
                     <br />

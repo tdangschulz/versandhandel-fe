@@ -42,7 +42,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
   }, []);
 
   React.useEffect(() => {
-    setFirstName(profile?.name);
+    setFirstName(profile?.firstName);
     setStreet(profile?.address.street);
     setHouseNo(Number(profile?.address.houseNo));
     setLastName(profile?.lastName);

@@ -3,8 +3,9 @@ import { ShoppingItem } from "../models";
 
 export type Profile = {
   auth?: string;
+  id?: number;
   password?: string;
-  name: string;
+  firstName: string;
   lastName?: string;
   isAdmin: boolean;
   address: {

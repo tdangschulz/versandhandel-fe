@@ -64,8 +64,8 @@ const ProductDetails: React.FC = () => {
         }}
       ></ProductDialog>
       <Grid container justifyContent="flex-end">
-        <Button onClick={addProduct} sx={{ mb: 1 }}>
-          New
+        <Button variant="outlined" onClick={addProduct} sx={{ mb: 2 }}>
+          Neues Produkt
         </Button>
         <Grid item xs={12} lg={12}>
           <TableContainer component={Paper}>

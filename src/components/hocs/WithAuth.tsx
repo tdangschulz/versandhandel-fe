@@ -5,7 +5,8 @@ import { getAdminInfo, getUserInfo } from "../../api/userApi";
 
 export function mapUserInfo(user: any, isAdmin: boolean): Profile {
   return {
-    name: user.firstName,
+    id: user.id,
+    firstName: user.firstName,
     lastName: user.lastName,
     isAdmin,
     password: user.password,

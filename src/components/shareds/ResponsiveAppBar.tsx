@@ -18,7 +18,8 @@ import { ProfileDialog } from "../pages/ProfileDialog";
 
 const pages = [
   { title: "Shop", target: "/shop", isUser: true },
-  { title: "Products", target: "/products", isAdmin: true },
+  { title: "Produkte", target: "/products", isAdmin: true },
+  { title: "Kunden", target: "/customers", isAdmin: true },
 ];
 const settings = [
   { title: "Profile", id: "profile" },
@@ -181,7 +182,7 @@ function ResponsiveAppBar() {
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    alt={state.userInfo?.name}
+                    alt={state.userInfo?.firstName}
                     src="/static/images/avatar/2.jpg"
                   />
                 </IconButton>
