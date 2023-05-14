@@ -6,6 +6,7 @@ import withAuth from "../components/hocs/WithAuth";
 import CustomerInvoice from "../components/pages/invoice/CustomerInvoice";
 import ProductList from "../components/pages/shop/ProductList";
 import CustomersList from "../components/pages/user/CustomersList";
+import InvoiceList from "../components/pages/invoice/InvoiceList";
 
 export const router = createBrowserRouter([
   {
@@ -35,5 +36,9 @@ export const router = createBrowserRouter([
   {
     path: "/customers",
     Component: withAuth(CustomersList),
+  },
+  {
+    path: "/invoices",
+    Component: withAuth(InvoiceList),
   },
 ]);

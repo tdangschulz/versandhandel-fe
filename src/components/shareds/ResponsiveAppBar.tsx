@@ -20,10 +20,10 @@ const pages = [
   { title: "Shop", target: "/shop", isUser: true },
   { title: "Produkte", target: "/products", isAdmin: true },
   { title: "Kunden", target: "/customers", isAdmin: true },
+  { title: "Rechnungen", target: "/invoices", isAdmin: true },
 ];
 const settings = [
   { title: "Profile", id: "profile" },
-  { title: "Invoices", id: "invoice" },
   { title: "Logout", id: "logout" },
 ];
 

@@ -14,7 +14,6 @@ export function mapUserInfo(user: any, isAdmin: boolean): Profile {
       city: user.residence,
       street: user.street,
       zipCode: user.zipCode,
-      email: user.email,
       houseNo: user.houseNo,
       residence: user.residence,
     },

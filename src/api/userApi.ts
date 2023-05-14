@@ -17,9 +17,14 @@ export const saveAdminProfile = async (profile: any) => {
   return response.data;
 };
 
+export const registerCustomer = async (profile: any) => {
+  const response = await axios.post<Profile>("customers", profile);
+  return response.data;
+};
+
 export const getCustomers = async () => {
   const response = await axios.get<Profile[]>("customers");
-  return response.data;
+  return response.data.filter((data) => data.id !== 0);
 };
 
 export const deleteCustomer = async (customerId: number) => {

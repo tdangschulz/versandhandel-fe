@@ -5,14 +5,15 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Link from "@mui/material/Link";
-import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
-import theme from "../../commons/theme";
+import { useNavigate } from "react-router-dom";
 import { getAdminInfo, getUserInfo } from "../../../api/userApi";
 import { useGlobalState } from "../../../context/globalContext";
-import { useNavigate } from "react-router-dom";
+import theme from "../../commons/theme";
+import { ProfileDialog } from "../ProfileDialog";
 
 function Copyright(props: any) {
   return (
@@ -64,7 +65,6 @@ export const LoginPage: React.FC = () => {
             city: user.residence,
             street: user.street,
             zipCode: user.zipCode,
-            email: user.email,
             houseNo: user.houseNo,
             residence: user.residence,
           },
@@ -84,62 +84,89 @@ export const LoginPage: React.FC = () => {
     login(userId?.toString(), password?.toString());
   };
 
+  const [showDialog, setShowDialog] = React.useState(false);
+
+  const onCancel = () => {
+    setShowDialog(false);
+  };
+
+  const afterProfileSubmited = () => {
+    setShowDialog(false);
+  };
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Versand 73!
-          </Typography>
+    <>
+      <ProfileDialog
+        registerDialog
+        open={showDialog}
+        afterSubmit={afterProfileSubmited}
+        onCancel={onCancel}
+        showPassword={false}
+      ></ProfileDialog>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="id"
-              label="User Id"
-              name="id"
-              autoComplete="id"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: "secondary.main" }}
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Versand 73!
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Sign In
-            </Button>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="id"
+                label="User Id"
+                name="id"
+                autoComplete="id"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, bgcolor: "secondary.main" }}
+              >
+                Sign In
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="outlined"
+                onClick={() => setShowDialog(true)}
+              >
+                Registrieren
+              </Button>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
+    </>
   );
 };

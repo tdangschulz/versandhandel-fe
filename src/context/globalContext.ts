@@ -12,7 +12,6 @@ export type Profile = {
     street: string;
     zipCode: string;
     city: string;
-    email: string;
     houseNo: number;
     residence: string;
   };

@@ -31,7 +31,8 @@ export type User = {
 };
 
 export type Invoice = {
-  product: { id: number };
+  id?: number;
+  product: Product;
   customer: User;
   quantity: number;
   totalPrice: number;

@@ -1,27 +1,37 @@
-import {
-  DialogActions,
-  DialogContent,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { DialogActions, DialogContent, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
+import { registerCustomer, saveAdminProfile } from "../../api/userApi";
 import { Profile, useGlobalState } from "../../context/globalContext";
-import { saveAdminProfile } from "../../api/userApi";
 import { mapUserInfo } from "../hocs/WithAuth";
 
 export interface ProfileDialogProps {
   open: boolean;
   afterSubmit?: (product: Profile) => void;
-  afterDelete?: (product: Profile) => void;
   onCancel?: () => void;
   profile?: Profile;
+  showPassword?: boolean;
+  registerDialog?: boolean;
+}
+
+function generateRandomNumber() {
+  const min = 10000; // Mindestwert
+  const max = 99999; // Höchstwert
+  const randomNumber = Math.floor(Math.random() * (max - min + 1) + min); // Generierung der Zufallszahl
+  return randomNumber;
 }
 
 export function ProfileDialog(props: ProfileDialogProps) {
-  const { onCancel, afterSubmit, open, profile, afterDelete } = props;
+  const {
+    onCancel,
+    afterSubmit,
+    open,
+    profile,
+    showPassword = true,
+    registerDialog,
+  } = props;
   const { state, dispatch } = useGlobalState();
   const [firstName, setFirstName] = React.useState<string>();
   const [street, setStreet] = React.useState<string>();
@@ -32,7 +42,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
   const [password, setPassword] = React.useState<string>();
 
   const [zipCode, setZipCode] = React.useState<string>();
-  const [id, setId] = React.useState<number>();
+  const [id, setId] = React.useState<number>(generateRandomNumber());
 
   React.useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -55,17 +65,20 @@ export function ProfileDialog(props: ProfileDialogProps) {
 
   const save = async () => {
     let response;
-    if (state.userInfo?.isAdmin) {
-      response = await saveAdminProfile({
-        id,
-        firstName,
-        houseNo,
-        lastName,
-        residence,
-        password,
-        zipCode,
-        street,
-      });
+    const user = {
+      id,
+      firstName,
+      houseNo,
+      lastName,
+      residence,
+      password,
+      zipCode,
+      street,
+    };
+    if (!registerDialog) {
+      response = await saveAdminProfile(user);
+    } else {
+      response = await registerCustomer(user);
     }
 
     if (typeof afterSubmit === "function" && dispatch && state.userInfo) {
@@ -84,6 +97,18 @@ export function ProfileDialog(props: ProfileDialogProps) {
       <DialogTitle>Profile</DialogTitle>
 
       <DialogContent>
+        <TextField
+          autoFocus
+          margin="normal"
+          id="id"
+          label="Kundennummer"
+          type="number"
+          fullWidth
+          variant="standard"
+          value={id}
+          disabled
+        />
+
         <TextField
           autoFocus
           margin="normal"
@@ -123,11 +148,15 @@ export function ProfileDialog(props: ProfileDialogProps) {
           margin="normal"
           id="houseNo"
           label="Hausnummer"
-          type="text"
+          type="number"
           fullWidth
           variant="standard"
           value={houseNo}
-          onChange={(event) => setHouseNo(Number(event.target.value))}
+          onChange={(event) =>
+            setHouseNo(
+              event.target.value ? Number(event.target.value) : undefined
+            )
+          }
         />
         <TextField
           autoFocus
@@ -143,25 +172,27 @@ export function ProfileDialog(props: ProfileDialogProps) {
         <TextField
           autoFocus
           margin="normal"
-          id="zipCode"
-          label="PLZ"
+          id="residence"
+          label="Wohnort"
           type="text"
           fullWidth
           variant="standard"
           value={residence}
           onChange={(event) => setResidence(event.target.value)}
         />
-        <TextField
-          autoFocus
-          margin="normal"
-          id="password"
-          label="Passwort"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
+        {showPassword ? (
+          <TextField
+            autoFocus
+            margin="normal"
+            id="password"
+            label="Passwort"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        ) : undefined}
       </DialogContent>
       <DialogActions>
         <Button onClick={deleting} sx={{ mr: 5 }}>

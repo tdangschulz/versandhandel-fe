@@ -1,4 +1,4 @@
-import { Button, Grid, ThemeProvider, useMediaQuery } from "@mui/material";
+import { Grid, ThemeProvider } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,43 +7,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
-import { getProducts } from "../../../api/product";
-import { useGlobalState } from "../../../context/globalContext";
-import { Product } from "../../../models";
-import withRoot from "../../hocs/withRoot";
-import ShoppingCart from "../ShoppingCart/ShopingCart";
+import { getInvoices } from "../../../api/product";
+import { Invoice } from "../../../models";
 import theme from "../../commons/theme";
+import withRoot from "../../hocs/withRoot";
 
-type Props = {
-  invoices: Invoice[];
-};
-
-const InvoiceList: React.FC<Props> = ({ invoices }) => {
-  const { state, dispatch } = useGlobalState();
-  const [products, setProducts] = React.useState<Product[]>([]);
+const InvoiceList: React.FC = () => {
+  const [invoices, setInvoices] = React.useState<Invoice[]>([]);
 
   React.useEffect(() => {
     const fetch = async () => {
-      const avaiableProducts = await getProducts();
-      setProducts(avaiableProducts);
+      const avaiableInvoices = await getInvoices();
+      setInvoices(avaiableInvoices);
     };
     fetch();
   }, []);
-
-  const addProduct = (product: Product) => {
-    state.shoppingCart.total += product.price;
-    const cartItem = state.shoppingCart.products.find(
-      (p) => p.product.id === product.id
-    );
-
-    if (cartItem) {
-      cartItem.amount += 1;
-    } else {
-      state.shoppingCart.products.push({ amount: 1, product });
-    }
-
-    if (dispatch) dispatch({ ...state });
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -53,15 +31,19 @@ const InvoiceList: React.FC<Props> = ({ invoices }) => {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Product</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right"></TableCell>
+                  <TableCell>Rechnungsnummer</TableCell>
+                  <TableCell>Vorname</TableCell>
+                  <TableCell>Nachname</TableCell>
+                  <TableCell>Anzahl</TableCell>
+                  <TableCell>Produkt</TableCell>
+                  <TableCell align="right">Nettopreis</TableCell>
+                  <TableCell align="right">Total</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {invoices.map((row) => (
                   <TableRow
-                    key={row.name}
+                    key={row.product.id}
                     sx={{
                       "&:last-child td, &:last-child th": {
                         border: 0,
@@ -69,11 +51,26 @@ const InvoiceList: React.FC<Props> = ({ invoices }) => {
                     }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.price} €</TableCell>
-                    <TableCell padding="checkbox">
-                      <Button onClick={() => addProduct(row)}>Add</Button>
+                    <TableCell component="th" scope="row">
+                      {row.customer.firstName}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.customer.lastName}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.quantity}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row.product.name}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.priceWithoutVat.toFixed(2)} €
+                    </TableCell>
+
+                    <TableCell align="right">
+                      {row.totalPrice.toFixed(2)} €
                     </TableCell>
                   </TableRow>
                 ))}
@@ -86,4 +83,4 @@ const InvoiceList: React.FC<Props> = ({ invoices }) => {
   );
 };
 
-export default InvoiceList;
+export default withRoot(InvoiceList);
