@@ -23,7 +23,7 @@ const pages = [
   { title: "Rechnungen", target: "/invoices", isAdmin: true },
 ];
 const settings = [
-  { title: "Profile", id: "profile" },
+  { title: "Profil", id: "profile" },
   { title: "Logout", id: "logout" },
 ];
 

@@ -98,7 +98,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Profile</DialogTitle>
+      <DialogTitle>Profil</DialogTitle>
 
       <DialogContent>
         <TextField
