@@ -204,7 +204,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
             Delete
           </Button>
         ) : undefined}
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={onCancel}>Abbrechen</Button>
         <Button onClick={save}>{submitTitle}</Button>
       </DialogActions>
     </Dialog>

@@ -21,10 +21,18 @@ export interface ProductDialogProps {
   afterDelete?: (product: Product) => void;
   onCancel?: () => void;
   product?: Product;
+  showDeleteButton?: boolean;
 }
 
 export function ProductDialog(props: ProductDialogProps) {
-  const { onCancel, afterSubmit, open, product, afterDelete } = props;
+  const {
+    onCancel,
+    afterSubmit,
+    open,
+    product,
+    afterDelete,
+    showDeleteButton = true,
+  } = props;
 
   const [category, setCategory] = React.useState<string>();
   const [name, setName] = React.useState<string>();
@@ -73,11 +81,11 @@ export function ProductDialog(props: ProductDialogProps) {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>{product?.id ? "Edit" : "Create"} Product</DialogTitle>
+      <DialogTitle>{product?.id ? "" : "Neues"} Produkt</DialogTitle>
 
       <DialogContent>
         <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <InputLabel id="demo-simple-select-label">Kategory</InputLabel>
 
           <Select
             labelId="demo-simple-select-label"
@@ -121,7 +129,7 @@ export function ProductDialog(props: ProductDialogProps) {
           autoFocus
           margin="dense"
           id="price"
-          label="Price"
+          label="Preis"
           type="number"
           fullWidth
           variant="standard"
@@ -136,7 +144,7 @@ export function ProductDialog(props: ProductDialogProps) {
           autoFocus
           margin="dense"
           id="description"
-          label="Description"
+          label="Beschreibung"
           type="text"
           fullWidth
           variant="standard"
@@ -156,11 +164,13 @@ export function ProductDialog(props: ProductDialogProps) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={deleting} sx={{ mr: 5 }}>
-          Delete
-        </Button>
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={create}>Create</Button>
+        {showDeleteButton ? (
+          <Button onClick={deleting} sx={{ mr: 5 }}>
+            Löschen
+          </Button>
+        ) : undefined}
+        <Button onClick={onCancel}>Abbrechen</Button>
+        <Button onClick={create}>Speichern</Button>
       </DialogActions>
     </Dialog>
   );

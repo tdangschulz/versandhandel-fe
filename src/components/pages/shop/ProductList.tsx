@@ -62,6 +62,7 @@ const ProductDetails: React.FC = () => {
           setSelectedProduct(undefined);
           setShowDialog(false);
         }}
+        showDeleteButton={false}
       ></ProductDialog>
       <Grid container justifyContent="flex-end">
         <Button variant="outlined" onClick={addProduct} sx={{ mb: 2 }}>
@@ -73,10 +74,10 @@ const ProductDetails: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Id</TableCell>
-                  <TableCell align="left">Product</TableCell>
-                  <TableCell align="left">Description</TableCell>
+                  <TableCell align="left">Produkt</TableCell>
+                  <TableCell align="left">Beschreibung</TableCell>
                   <TableCell sx={{ width: 100 }} align="right">
-                    Price
+                    Preis
                   </TableCell>
                   <TableCell align="right"></TableCell>
                 </TableRow>
