@@ -8,6 +8,7 @@ export type Profile = {
   firstName: string;
   lastName?: string;
   isAdmin: boolean;
+  isPremium?: boolean;
   address: {
     street: string;
     zipCode: string;
@@ -23,6 +24,7 @@ export type DefaultGlobalState = {
     total: number;
     priceWithoutVat: number;
     products: ShoppingItem[];
+    premium: number;
   };
 };
 
@@ -31,6 +33,7 @@ export const defaultGlobalState = {
     total: 0,
     priceWithoutVat: 0,
     products: [],
+    premium: 0,
   },
 } as DefaultGlobalState;
 export const globalStateContext = React.createContext(defaultGlobalState);

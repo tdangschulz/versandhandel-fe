@@ -68,6 +68,13 @@ const InvoiceComp = () => {
               <td>{p.product.price * p.amount} €</td>
             </tr>
           ))}
+          {state.userInfo?.isPremium ? (
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Rabat: {state.shoppingCart.premium.toFixed(2)} €</td>
+            </tr>
+          ) : undefined}
           <tr>
             <td></td>
             <td></td>

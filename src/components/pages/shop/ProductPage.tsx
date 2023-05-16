@@ -28,9 +28,13 @@ const ProductPage: React.FC = () => {
   }, []);
 
   const addProduct = (product: Product) => {
-    state.shoppingCart.total += product.price;
-    state.shoppingCart.priceWithoutVat +=
-      (product.price * 100.0) / (100 + product.vatRate);
+    state.shoppingCart.premium += product.price * 0.03;
+
+    const price = product.price - product.price * 0.03;
+    state.shoppingCart.priceWithoutVat += price - price * product.vatRate;
+
+    state.shoppingCart.total += price;
+
     const cartItem = state.shoppingCart.products.find(
       (p) => p.product.id === product.id
     );

@@ -98,7 +98,7 @@ export function ProfileDialog(props: ProfileDialogProps) {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Profil</DialogTitle>
+      <DialogTitle>Profil {profile?.isPremium ? "👑" : ""}</DialogTitle>
 
       <DialogContent>
         <TextField

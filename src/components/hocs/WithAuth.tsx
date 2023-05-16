@@ -7,6 +7,7 @@ export function mapUserInfo(user: any, isAdmin: boolean): Profile {
   return {
     id: user.id,
     firstName: user.firstName,
+    isPremium: user.turnoverSoFar > 10000,
     lastName: user.lastName,
     isAdmin,
     password: user.password,

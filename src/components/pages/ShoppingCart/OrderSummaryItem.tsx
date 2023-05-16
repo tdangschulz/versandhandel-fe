@@ -60,10 +60,12 @@ export default function OrderSummaryItem() {
   };
 
   const deleteItem = (item: ShoppingItem) => {
-    state.shoppingCart.total -= item.product.price;
+    state.shoppingCart.premium -= item.product.price * 0.03;
 
-    state.shoppingCart.priceWithoutVat -=
-      (item.product.price * 100.0) / (100 + item.product.vatRate);
+    const price = item.product.price - item.product.price * 0.03;
+    state.shoppingCart.priceWithoutVat -= price - price * item.product.vatRate;
+
+    state.shoppingCart.total -= price;
     const cartItem = state.shoppingCart.products
       .filter(Boolean)
       .find((p) => p.product.id === item.product.id);
@@ -119,6 +121,20 @@ export default function OrderSummaryItem() {
         </Grid>
         <hr />
         <Grid container>
+          {state.userInfo?.isPremium ? (
+            <>
+              <Grid item xs={11} sm={11} md={11} lg={9}>
+                <Typography variant="body1" component="div" align="left">
+                  Premiumrabat 👑
+                </Typography>
+              </Grid>
+              <Grid item xs={1} sm={1} md={1} lg={3}>
+                <Typography variant="h6" component="div" align="right">
+                  -{state.shoppingCart.premium.toFixed(2)} €
+                </Typography>
+              </Grid>
+            </>
+          ) : undefined}
           <Grid item xs={11} sm={11} md={11} lg={9}>
             <Typography variant="body1" component="div" align="left">
               Netto

@@ -69,7 +69,7 @@ export function ProductDialog(props: ProductDialogProps) {
       name,
       description,
       price,
-      vatRate,
+      vatRate: vatRate / 100,
       category,
     };
 
@@ -85,7 +85,7 @@ export function ProductDialog(props: ProductDialogProps) {
 
       <DialogContent>
         <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="demo-simple-select-label">Kategory</InputLabel>
+          <InputLabel id="demo-simple-select-label">Kategorie</InputLabel>
 
           <Select
             labelId="demo-simple-select-label"
@@ -155,7 +155,7 @@ export function ProductDialog(props: ProductDialogProps) {
           autoFocus
           margin="dense"
           id="vatRate"
-          label="Vat"
+          label="Vat (%)"
           type="text"
           fullWidth
           variant="standard"

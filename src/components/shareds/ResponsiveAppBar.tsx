@@ -87,6 +87,7 @@ function ResponsiveAppBar() {
         onCancel={onCancel}
         profile={state.userInfo}
         showDeleteButton={false}
+        showPassword={state.userInfo?.isAdmin}
       ></ProfileDialog>
       <AppBar position="static" sx={{ bgcolor: "secondary.main" }}>
         <Container maxWidth="xl">
