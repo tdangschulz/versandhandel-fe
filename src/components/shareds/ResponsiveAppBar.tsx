@@ -1,19 +1,19 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Profile, useGlobalState } from "../../context/globalContext";
+import { useGlobalState } from "../../context/globalContext";
 import { ProfileDialog } from "../pages/ProfileDialog";
 
 const pages = [
@@ -52,6 +52,10 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = (setting: { title: string; id: string }) => {
     if (setting.id === "logout") {
+      state.shoppingCart.priceWithoutVat = 0;
+      state.shoppingCart.products = [];
+      state.shoppingCart.total = 0;
+
       localStorage.removeItem("auth");
       localStorage.removeItem("userId");
 
@@ -71,7 +75,7 @@ function ResponsiveAppBar() {
     setShowDialog(false);
   };
 
-  const afterProfileSubmited = (profile: Profile) => {
+  const afterProfileSubmited = () => {
     setShowDialog(false);
   };
 
@@ -91,7 +95,6 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -100,6 +103,9 @@ function ResponsiveAppBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                ":hover": {
+                  color: "#B8122A",
+                },
               }}
             >
               FAK73
@@ -171,7 +177,14 @@ function ResponsiveAppBar() {
                   <Button
                     key={page.title}
                     onClick={() => navigate(page.target)}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      ":hover": {
+                        color: "#B8122A",
+                      },
+                    }}
                   >
                     {page.title}
                   </Button>

@@ -20,7 +20,6 @@ export type Profile = {
 export type DefaultGlobalState = {
   userInfo?: Profile;
   shoppingCart: {
-    shipping: number;
     total: number;
     priceWithoutVat: number;
     products: ShoppingItem[];
@@ -31,7 +30,6 @@ export const defaultGlobalState = {
   shoppingCart: {
     total: 0,
     priceWithoutVat: 0,
-    shipping: 6,
     products: [],
   },
 } as DefaultGlobalState;

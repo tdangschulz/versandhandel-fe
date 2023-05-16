@@ -53,6 +53,7 @@ export const LoginPage: React.FC = () => {
       localStorage.setItem("auth", window.btoa(`${userId}:`));
       localStorage.setItem("userId", userId);
       user = await getUserInfo(userId.toString());
+      navigate("/shop");
     }
 
     if (dispatch && user) {
@@ -70,7 +71,6 @@ export const LoginPage: React.FC = () => {
           },
         },
       });
-      navigate("/shop");
     }
   };
 
@@ -102,6 +102,8 @@ export const LoginPage: React.FC = () => {
         afterSubmit={afterProfileSubmited}
         onCancel={onCancel}
         showPassword={false}
+        showDeleteButton={false}
+        submitTitle="Registrieren"
       ></ProfileDialog>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -158,7 +160,10 @@ export const LoginPage: React.FC = () => {
                 type="submit"
                 fullWidth
                 variant="outlined"
-                onClick={() => setShowDialog(true)}
+                onClick={() => {
+                  localStorage.removeItem("userId");
+                  setShowDialog(true);
+                }}
               >
                 Registrieren
               </Button>

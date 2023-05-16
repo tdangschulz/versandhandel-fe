@@ -14,6 +14,8 @@ export interface ProfileDialogProps {
   profile?: Profile;
   showPassword?: boolean;
   registerDialog?: boolean;
+  showDeleteButton?: boolean;
+  submitTitle?: string;
 }
 
 function generateRandomNumber() {
@@ -31,6 +33,8 @@ export function ProfileDialog(props: ProfileDialogProps) {
     profile,
     showPassword = true,
     registerDialog,
+    showDeleteButton = true,
+    submitTitle = "Speichern",
   } = props;
   const { state, dispatch } = useGlobalState();
   const [firstName, setFirstName] = React.useState<string>();
@@ -195,11 +199,13 @@ export function ProfileDialog(props: ProfileDialogProps) {
         ) : undefined}
       </DialogContent>
       <DialogActions>
-        <Button onClick={deleting} sx={{ mr: 5 }}>
-          Delete
-        </Button>
+        {showDeleteButton ? (
+          <Button onClick={deleting} sx={{ mr: 5 }}>
+            Delete
+          </Button>
+        ) : undefined}
         <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={save}>Speichern</Button>
+        <Button onClick={save}>{submitTitle}</Button>
       </DialogActions>
     </Dialog>
   );
