@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Product } from "../../../../models";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   products: Product[];
@@ -15,9 +15,21 @@ type Props = {
 };
 
 export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
+  const [selected, setSelected] = useState<Product>();
+
   useEffect(() => {
-    console.log("render shop table");
+    console.log("rendering shop table");
   });
+
+  const handler = (e: KeyboardEvent) => {
+    if (e.key === "a" && selected) {
+      addProduct(selected);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keypress", handler);
+  }, [selected]);
 
   return (
     <TableContainer component={Paper}>
@@ -36,6 +48,8 @@ export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
         <TableBody>
           {products.map((row) => (
             <TableRow
+              selected={row.id === selected?.id}
+              onClick={() => setSelected(row)}
               key={row.name}
               sx={{
                 "&:last-child td, &:last-child th": {

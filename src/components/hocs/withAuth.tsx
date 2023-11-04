@@ -25,7 +25,7 @@ export function mapUserInfo(user: any, isAdmin: boolean): Profile {
 export default function withAuth<P extends JSX.IntrinsicAttributes>(
   Component: React.ComponentType<P>
 ) {
-  function WithWrapper(props: P) {
+  function withWrapper(props: P) {
     const { dispatch } = useGlobalState();
     const navigate = useNavigate();
 
@@ -61,5 +61,5 @@ export default function withAuth<P extends JSX.IntrinsicAttributes>(
     return <Component {...props} />;
   }
 
-  return WithWrapper;
+  return withWrapper;
 }

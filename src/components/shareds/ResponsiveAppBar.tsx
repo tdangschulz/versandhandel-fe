@@ -70,14 +70,14 @@ function ResponsiveAppBar() {
     setShowDialog(false);
   };
 
-  const afterProfileSubmited = () => {
+  const afterProfileSubmitted = () => {
     setShowDialog(false);
   };
 
   return (
     <>
       <ProfileDialog
-        afterSubmit={afterProfileSubmited}
+        afterSubmit={afterProfileSubmitted}
         open={showDialog}
         onCancel={onCancel}
         profile={state.userInfo}

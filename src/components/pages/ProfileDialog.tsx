@@ -5,7 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
 import { registerCustomer, saveAdminProfile } from "../../api/userApi";
 import { useGlobalState } from "../../context/globalContext";
-import { mapUserInfo } from "../hocs/WithAuth";
+import { mapUserInfo } from "../hocs/withAuth";
 import { Profile } from "../../models";
 
 export interface ProfileDialogProps {

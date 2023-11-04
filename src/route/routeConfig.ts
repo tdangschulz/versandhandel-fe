@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Invoice } from "../components/pages/invoice/Invoice";
 import ShopPage from "../components/pages/shop/ShopPage";
 import { LoginPage } from "../components/pages/login/Login";
-import withAuth from "../components/hocs/WithAuth";
+import withAuth from "../components/hocs/withAuth";
 import CustomerInvoice from "../components/pages/invoice/CustomerInvoice";
 import ProductList from "../components/pages/product/ProductList";
 import CustomersList from "../components/pages/user/CustomersList";
