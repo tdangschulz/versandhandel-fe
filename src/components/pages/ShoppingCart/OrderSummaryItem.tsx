@@ -92,7 +92,7 @@ export default function OrderSummaryItem() {
               </Grid>
               <Grid item xs={1} sm={1} md={1} lg={3}>
                 <Typography variant="h6" component="div" align="right">
-                  {item.product.price * item.amount} €
+                  {(item.product.price * item.amount).toFixed(2)} €
                 </Typography>
               </Grid>
             </React.Fragment>

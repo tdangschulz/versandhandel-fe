@@ -71,7 +71,6 @@ export const reducer = (state: DefaultGlobalState, action: Action) => {
 
       return {
         ...state,
-        ...action.payload,
       };
     }
     case "DELETE_ITEM": {
@@ -101,13 +100,11 @@ export const reducer = (state: DefaultGlobalState, action: Action) => {
 
       return {
         ...state,
-        ...action.payload,
       };
     }
     default: {
       return {
         ...state,
-        ...action.payload,
       };
     }
   }

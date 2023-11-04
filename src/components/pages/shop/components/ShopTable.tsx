@@ -6,8 +6,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Product } from "../../../../models";
 import { useEffect, useState } from "react";
+import { Product } from "../../../../models";
 
 type Props = {
   products: Product[];
@@ -21,14 +21,18 @@ export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
     console.log("rendering shop table");
   });
 
-  const handler = (e: KeyboardEvent) => {
-    if (e.key === "a" && selected) {
-      addProduct(selected);
-    }
-  };
-
   useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "a" && selected) {
+        addProduct(selected);
+      }
+    };
+
     document.addEventListener("keypress", handler);
+
+    return () => {
+      document.removeEventListener("keypress", handler);
+    };
   }, [selected]);
 
   return (
