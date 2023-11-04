@@ -1,22 +1,6 @@
 import * as React from "react";
-import { ShoppingItem } from "../models";
-
-export type Profile = {
-  auth?: string;
-  id?: number;
-  password?: string;
-  firstName: string;
-  lastName?: string;
-  isAdmin: boolean;
-  isPremium?: boolean;
-  address: {
-    street: string;
-    zipCode: string;
-    city: string;
-    houseNo: number;
-    residence: string;
-  };
-};
+import { Product, Profile, ShoppingItem } from "../models";
+import { Action } from "./reducer";
 
 export type DefaultGlobalState = {
   userInfo?: Profile;
@@ -26,9 +10,11 @@ export type DefaultGlobalState = {
     products: ShoppingItem[];
     premium: number;
   };
+  products: Product[];
 };
 
 export const defaultGlobalState = {
+  products: [],
   shoppingCart: {
     total: 0,
     priceWithoutVat: 0,
@@ -36,12 +22,13 @@ export const defaultGlobalState = {
     premium: 0,
   },
 } as DefaultGlobalState;
-export const globalStateContext = React.createContext(defaultGlobalState);
-export const dispatchStateContext = React.createContext<
-  React.Dispatch<DefaultGlobalState> | undefined
+export const GlobalStateContext = React.createContext(defaultGlobalState);
+
+export const DispatchStateContext = React.createContext<
+  React.Dispatch<Action> | undefined
 >(undefined);
 
 export const useGlobalState = () => ({
-  state: React.useContext(globalStateContext),
-  dispatch: React.useContext(dispatchStateContext),
+  state: React.useContext(GlobalStateContext),
+  dispatch: React.useContext(DispatchStateContext)!,
 });

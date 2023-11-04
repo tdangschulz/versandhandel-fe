@@ -32,10 +32,10 @@ export default function OrderSummaryItem() {
 
   const navigate = useNavigate();
 
-  const showInvoce = async () => {
+  const showInvoice = async () => {
     if (state.userInfo) {
       const item = state.shoppingCart.products[0];
-      const invoce: Invoice = {
+      const invoice: Invoice = {
         product: item.product,
         customer: {
           id: state.userInfo.id,
@@ -53,35 +53,14 @@ export default function OrderSummaryItem() {
         priceWithoutVat: state.shoppingCart.priceWithoutVat,
       };
 
-      await saveInvoice(invoce);
+      await saveInvoice(invoice);
 
       navigate("/checkout");
     }
   };
 
   const deleteItem = (item: ShoppingItem) => {
-    state.shoppingCart.premium -= item.product.price * 0.03;
-
-    const price = item.product.price - item.product.price * 0.03;
-    state.shoppingCart.priceWithoutVat -= price - price * item.product.vatRate;
-
-    state.shoppingCart.total -= price;
-    const cartItem = state.shoppingCart.products
-      .filter(Boolean)
-      .find((p) => p.product.id === item.product.id);
-
-    if (cartItem) {
-      cartItem.amount -= 1;
-
-      if (cartItem.amount <= 0) {
-        const index = state.shoppingCart.products.indexOf(cartItem);
-        delete state.shoppingCart.products[index];
-        state.shoppingCart.products =
-          state.shoppingCart.products.filter(Boolean);
-      }
-    }
-
-    if (dispatch) dispatch({ ...state });
+    dispatch({ type: "DELETE_ITEM", payload: item });
   };
 
   return (
@@ -163,7 +142,7 @@ export default function OrderSummaryItem() {
           disabled={state.shoppingCart.products.length === 0}
           size="large"
           color="primary"
-          onClick={showInvoce}
+          onClick={showInvoice}
         >
           BUY NOW
         </Button>

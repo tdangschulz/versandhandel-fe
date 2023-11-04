@@ -11,16 +11,17 @@ import { getProducts } from "../../../api/product";
 import { Product } from "../../../models";
 import withRoot from "../../hocs/withRoot";
 import { ProductDialog } from "./ProductDialog";
+import { useGlobalState } from "../../../context/globalContext";
 
 const ProductDetails: React.FC = () => {
-  const [products, setProducts] = React.useState<Product[]>([]);
   const [showDialog, setShowDialog] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
+  const { state, dispatch } = useGlobalState();
 
   React.useEffect(() => {
     const fetch = async () => {
-      const avaiableProducts = await getProducts();
-      setProducts(avaiableProducts);
+      const availableProducts = await getProducts();
+      dispatch({ type: "AVAILABLE_PRODUCTS", payload: availableProducts });
     };
     fetch();
   }, []);
@@ -31,22 +32,13 @@ const ProductDetails: React.FC = () => {
   };
 
   const afterSubmit = (product: Product) => {
-    const index = products.findIndex((p) => p.id === product.id);
-    if (index > 0) {
-      products[index] = product;
-    } else {
-      products.push(product);
-    }
-
-    setProducts(products);
+    dispatch({ type: "UPSERT_PRODUCT", payload: product });
     setShowDialog(false);
     setSelectedProduct(undefined);
   };
 
   const afterDelete = (product: Product) => {
-    const index = products.findIndex((p) => p.id === product.id);
-    delete products[index];
-    setProducts(products.filter(Boolean));
+    dispatch({ type: "DELETE_PRODUCT", payload: product });
     setSelectedProduct(undefined);
     setShowDialog(false);
   };
@@ -83,7 +75,7 @@ const ProductDetails: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.map((row) => (
+                {state.products.map((row) => (
                   <TableRow
                     key={row.name}
                     sx={{

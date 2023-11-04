@@ -11,7 +11,7 @@ export default function ShoppingCart() {
         style={{ paddingRight: 0 }}
       >
         <Grid container>
-          <Grid item lg={12}>
+          <Grid item lg={12} sm={12}>
             <OrderSummaryItem />
           </Grid>
         </Grid>

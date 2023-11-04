@@ -3,7 +3,7 @@ export type Product = {
   price: number;
   id: number;
   description?: string;
-  category?: Category;
+  category: Category;
   vatRate: number;
 };
 
@@ -38,4 +38,21 @@ export type Invoice = {
   totalPrice: number;
   priceWithoutVat: number;
   isPremiumCustomer: boolean;
+};
+
+export type Profile = {
+  auth?: string;
+  id?: number;
+  password?: string;
+  firstName: string;
+  lastName?: string;
+  isAdmin: boolean;
+  isPremium?: boolean;
+  address: {
+    street: string;
+    zipCode: string;
+    city: string;
+    houseNo: number;
+    residence: string;
+  };
 };

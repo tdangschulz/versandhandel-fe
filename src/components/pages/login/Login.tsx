@@ -56,7 +56,7 @@ export const LoginPage: React.FC = () => {
       navigate("/shop");
     }
 
-    if (dispatch && user) {
+    if (user) {
       dispatch({
         ...state,
         userInfo: {

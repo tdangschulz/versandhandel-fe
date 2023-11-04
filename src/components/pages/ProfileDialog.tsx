@@ -4,8 +4,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
 import { registerCustomer, saveAdminProfile } from "../../api/userApi";
-import { Profile, useGlobalState } from "../../context/globalContext";
+import { useGlobalState } from "../../context/globalContext";
 import { mapUserInfo } from "../hocs/WithAuth";
+import { Profile } from "../../models";
 
 export interface ProfileDialogProps {
   open: boolean;
@@ -88,8 +89,8 @@ export function ProfileDialog(props: ProfileDialogProps) {
     if (typeof afterSubmit === "function" && dispatch && state.userInfo) {
       const profile = mapUserInfo(response, state.userInfo.isAdmin);
       dispatch({
-        ...state,
-        userInfo: profile,
+        type: "ADD_USER",
+        payload: profile,
       });
 
       afterSubmit(profile);

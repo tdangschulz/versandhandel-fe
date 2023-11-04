@@ -22,6 +22,7 @@ export const getInvoices = async () => {
 };
 
 export const saveInvoice = async (invoice: Invoice) => {
+  
   const response = await axios.post<Invoice>("/invoices", invoice);
   return response.data;
 };

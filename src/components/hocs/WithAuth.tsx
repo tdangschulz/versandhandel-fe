@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Profile, useGlobalState } from "../../context/globalContext";
+import { useGlobalState } from "../../context/globalContext";
 import { getAdminInfo, getUserInfo } from "../../api/userApi";
+import { Profile } from "../../models";
 
 export function mapUserInfo(user: any, isAdmin: boolean): Profile {
   return {
@@ -24,10 +25,8 @@ export function mapUserInfo(user: any, isAdmin: boolean): Profile {
 export default function withAuth<P extends JSX.IntrinsicAttributes>(
   Component: React.ComponentType<P>
 ) {
-  // const navigate = useNavigate();
-
   function WithWrapper(props: P) {
-    const { state, dispatch } = useGlobalState();
+    const { dispatch } = useGlobalState();
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -45,10 +44,10 @@ export default function withAuth<P extends JSX.IntrinsicAttributes>(
             isAdmin = false;
           }
 
-          if (dispatch && user) {
+          if (user) {
             dispatch({
-              ...state,
-              userInfo: mapUserInfo(user, isAdmin),
+              type: "ADD_USER",
+              payload: mapUserInfo(user, isAdmin),
             });
           }
         };

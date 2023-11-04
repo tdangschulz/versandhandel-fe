@@ -4,33 +4,25 @@ import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import { configureDefaults } from "./api/axiosBase";
 import {
-  DefaultGlobalState,
   defaultGlobalState,
-  dispatchStateContext,
-  globalStateContext,
+  DispatchStateContext,
+  GlobalStateContext,
 } from "./context/globalContext";
 import { router } from "./route/routeConfig";
+import { reducer } from "./context/reducer";
 
 configureDefaults();
 
 function App() {
-  const [state, dispatch] = React.useReducer(
-    (state: DefaultGlobalState, newValue: DefaultGlobalState) => {
-      return {
-        ...state,
-        ...newValue,
-      };
-    },
-    defaultGlobalState
-  );
+  const [state, dispatch] = React.useReducer(reducer, defaultGlobalState);
 
   return (
     <StrictMode>
-      <globalStateContext.Provider value={state}>
-        <dispatchStateContext.Provider value={dispatch}>
+      <GlobalStateContext.Provider value={state}>
+        <DispatchStateContext.Provider value={dispatch}>
           <RouterProvider router={router} />
-        </dispatchStateContext.Provider>
-      </globalStateContext.Provider>
+        </DispatchStateContext.Provider>
+      </GlobalStateContext.Provider>
     </StrictMode>
   );
 }

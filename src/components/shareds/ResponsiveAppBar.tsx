@@ -15,6 +15,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../context/globalContext";
 import { ProfileDialog } from "../pages/ProfileDialog";
+import { useSession } from "../hooks/useSession";
 
 const pages = [
   { title: "Shop", target: "/shop", isUser: true },
@@ -43,6 +44,7 @@ function ResponsiveAppBar() {
   };
 
   const navigate = useNavigate();
+  const { logout } = useSession();
 
   const { state } = useGlobalState();
 
@@ -52,14 +54,7 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = (setting: { title: string; id: string }) => {
     if (setting.id === "logout") {
-      state.shoppingCart.priceWithoutVat = 0;
-      state.shoppingCart.products = [];
-      state.shoppingCart.total = 0;
-
-      localStorage.removeItem("auth");
-      localStorage.removeItem("userId");
-
-      navigate("/login");
+      logout();
     } else if (setting.id === "invoice") {
       navigate("/customer/invoice");
     } else if (setting.id === "profile") {
