@@ -1,6 +1,6 @@
 import { Grid, TextField, ThemeProvider } from "@mui/material";
 
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { getProducts } from "../../../api/product";
 import { useGlobalState } from "../../../context/globalContext";
 import { Product } from "../../../models";
@@ -8,10 +8,11 @@ import theme from "../../commons/theme";
 import withRoot from "../../hocs/withRoot";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { ShopTable } from "./components/ShopTable";
+import { LocaleContext } from "../../../context/localContext";
 
 const ShopPage: FC = () => {
   const { dispatch, state } = useGlobalState();
-
+  const { locale } = useContext(LocaleContext);
   const [sorted, setSorted] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -50,7 +51,10 @@ const ShopPage: FC = () => {
     <ThemeProvider theme={theme}>
       <Grid container alignItems="start">
         <Grid item sm={12}>
-          <TextField placeholder="Search" inputRef={inputRef}></TextField>
+          <TextField
+            placeholder={locale.search}
+            inputRef={inputRef}
+          ></TextField>
         </Grid>
         <Grid item xs={12} lg={8}>
           {table}

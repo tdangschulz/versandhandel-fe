@@ -6,11 +6,14 @@ type Props = {
 };
 
 type LocaleContextType = {
-  switchLocale?: () => void;
+  switchLocale: () => void;
   locale: Record<string, string>;
 };
 
-export const LocaleContext = createContext<LocaleContextType>({ locale: {} });
+export const LocaleContext = createContext<LocaleContextType>({
+  locale: {},
+  switchLocale: () => {},
+});
 
 export const LocaleProvider: FC<Props> = ({ children }) => {
   const [currentLocal, setCurrentLocale] = useState<"de" | "en">("de");
