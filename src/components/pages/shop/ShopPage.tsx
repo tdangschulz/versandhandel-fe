@@ -36,7 +36,7 @@ const ShopPage: FC = () => {
 
   useEffect(() => {
     const sortedProducts = state.products.sort((a, b) =>
-      a.category.localeCompare(b.category)
+      b.name > a.name ? -1 : 1
     );
     setSorted(sortedProducts);
   }, [state.products]);
