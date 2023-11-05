@@ -5,6 +5,14 @@
 - ensure the BE is already running
 - run `npm run dev` on the terminal
 
+## Login credentials
+
+- user : 33608
+- user : 69274
+- user : 83643
+- user : 84496
+- Admin: 22222 Password: abc123
+
 ## Aufgabe 1:
 
 Als ein Benutzer möchte ich die Möglichkeit haben, markierte Produkte in der Produktliste durch Drücken der Taste 'A' auf meiner Tastatur direkt in den Warenkorb zu legen, damit ich eine schnellere und effizientere Einkaufserfahrung genießen kann, ohne die Maus benutzen zu müssen.
@@ -48,3 +56,7 @@ useEffect(() => {
   }
 }, []);
 ```
+
+## Wissenswertes zu Headless Components
+
+https://martinfowler.com/articles/headless-component.html

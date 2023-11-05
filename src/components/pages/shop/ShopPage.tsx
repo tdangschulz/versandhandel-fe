@@ -1,6 +1,14 @@
 import { Grid, TextField, ThemeProvider } from "@mui/material";
 
-import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { getProducts } from "../../../api/product";
 import { useGlobalState } from "../../../context/globalContext";
 import { Product } from "../../../models";
@@ -33,18 +41,18 @@ const ShopPage: FC = () => {
     setSorted(sortedProducts);
   }, [state.products]);
 
-  const addProduct = (product: Product) => {
-    dispatch({ type: "ADD_ITEM", payload: product });
-  };
-
   const inputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  const addProduct = useCallback((product: Product) => {
+    dispatch({ type: "ADD_ITEM", payload: product });
+  }, []);
+
   const table = useMemo(() => {
-    return <ShopTable addProduct={addProduct} products={sorted}></ShopTable>;
+    return <ShopTable addingProduct={addProduct} products={sorted}></ShopTable>;
   }, [sorted]);
 
   return (

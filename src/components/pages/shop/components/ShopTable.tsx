@@ -6,18 +6,16 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "../../../../models";
-import { LocaleContext } from "../../../../context/localContext";
 
 type Props = {
   products: Product[];
-  addProduct: (product: Product) => void;
+  addingProduct: (product: Product) => void;
 };
 
-export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
+export const ShopTable: React.FC<Props> = ({ products, addingProduct }) => {
   const [selected, setSelected] = useState<Product>();
-  const { locale } = useContext(LocaleContext);
 
   useEffect(() => {
     console.log("rendering shop table");
@@ -26,7 +24,7 @@ export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "a" && selected) {
-        addProduct(selected);
+        addingProduct(selected);
       }
     };
 
@@ -43,10 +41,10 @@ export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Id</TableCell>
-            <TableCell align="left">{locale.product}</TableCell>
-            <TableCell align="left">{locale.description}</TableCell>
+            <TableCell align="left">{"Product"}</TableCell>
+            <TableCell align="left">{"Description"}</TableCell>
             <TableCell sx={{ width: 100 }} align="right">
-              {locale.price}
+              {"Price"}
             </TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
@@ -74,7 +72,7 @@ export const ShopTable: React.FC<Props> = ({ products, addProduct }) => {
               </TableCell>
               <TableCell align="right">{row.price} €</TableCell>
               <TableCell padding="checkbox">
-                <Button onClick={() => addProduct(row)}>Add</Button>
+                <Button onClick={() => addingProduct(row)}>Add</Button>
               </TableCell>
             </TableRow>
           ))}
