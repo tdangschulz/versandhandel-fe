@@ -140,7 +140,7 @@ export default function OrderSummaryItem() {
           color="primary"
           onClick={showInvoice}
         >
-          BUY NOW
+          {locale.buyNow}
         </Button>
       </CardActions>
     </Card>

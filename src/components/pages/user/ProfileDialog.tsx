@@ -3,10 +3,10 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { registerCustomer, saveAdminProfile } from "../../api/userApi";
-import { useGlobalState } from "../../context/globalContext";
-import { mapUserInfo } from "../hocs/withAuth";
-import { Profile } from "../../models";
+import { registerCustomer, saveAdminProfile } from "../../../api/userApi";
+import { useGlobalState } from "../../../context/globalContext";
+import { mapUserInfo } from "../../hocs/withAuth";
+import { Profile } from "../../../models";
 
 export interface ProfileDialogProps {
   open: boolean;
@@ -102,102 +102,104 @@ export function ProfileDialog(props: ProfileDialogProps) {
       <DialogTitle>Profil {profile?.isPremium ? "👑" : ""}</DialogTitle>
 
       <DialogContent>
-        <TextField
-          autoFocus
-          margin="normal"
-          id="id"
-          label="Kundennummer"
-          type="number"
-          fullWidth
-          variant="standard"
-          value={id}
-          disabled
-        />
-
-        <TextField
-          autoFocus
-          margin="normal"
-          id="name"
-          label="Name"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-        />
-
-        <TextField
-          autoFocus
-          margin="normal"
-          id="lastName"
-          label="Nachname"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-        />
-        <TextField
-          autoFocus
-          margin="normal"
-          id="street"
-          label="Straße"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={street}
-          onChange={(event) => setStreet(event.target.value)}
-        />
-        <TextField
-          autoFocus
-          margin="normal"
-          id="houseNo"
-          label="Hausnummer"
-          type="number"
-          fullWidth
-          variant="standard"
-          value={houseNo}
-          onChange={(event) =>
-            setHouseNo(
-              event.target.value ? Number(event.target.value) : undefined
-            )
-          }
-        />
-        <TextField
-          autoFocus
-          margin="normal"
-          id="zipCode"
-          label="PLZ"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={zipCode}
-          onChange={(event) => setZipCode(event.target.value)}
-        />
-        <TextField
-          autoFocus
-          margin="normal"
-          id="residence"
-          label="Wohnort"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={residence}
-          onChange={(event) => setResidence(event.target.value)}
-        />
-        {showPassword ? (
+        <div>
           <TextField
             autoFocus
             margin="normal"
-            id="password"
-            label="Passwort"
+            id="id"
+            label="Kundennummer"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={id}
+            disabled
+          />
+
+          <TextField
+            autoFocus
+            margin="normal"
+            id="name"
+            label="Name"
             type="text"
             fullWidth
             variant="standard"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
           />
-        ) : undefined}
+
+          <TextField
+            autoFocus
+            margin="normal"
+            id="lastName"
+            label="Nachname"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="normal"
+            id="street"
+            label="Straße"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={street}
+            onChange={(event) => setStreet(event.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="normal"
+            id="houseNo"
+            label="Hausnummer"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={houseNo}
+            onChange={(event) =>
+              setHouseNo(
+                event.target.value ? Number(event.target.value) : undefined
+              )
+            }
+          />
+          <TextField
+            autoFocus
+            margin="normal"
+            id="zipCode"
+            label="PLZ"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={zipCode}
+            onChange={(event) => setZipCode(event.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="normal"
+            id="residence"
+            label="Wohnort"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={residence}
+            onChange={(event) => setResidence(event.target.value)}
+          />
+          {showPassword ? (
+            <TextField
+              autoFocus
+              margin="normal"
+              id="password"
+              label="Passwort"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          ) : undefined}
+        </div>
       </DialogContent>
       <DialogActions>
         {showDeleteButton ? (

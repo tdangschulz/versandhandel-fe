@@ -6,6 +6,8 @@ export const locales = {
     search: "Suche",
     price: "Preis",
     cart: "Einkaufswagen",
+    newProduct: "Neues Produkt",
+    buyNow: "Bezahlen",
   },
   en: {
     footer: "build with love",
@@ -14,5 +16,7 @@ export const locales = {
     search: "Search",
     price: "Price",
     cart: "Shopping cart",
+    newProduct: "New product",
+    buyNow: "Buy now",
   },
 };

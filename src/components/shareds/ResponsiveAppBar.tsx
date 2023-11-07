@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../context/globalContext";
-import { ProfileDialog } from "../pages/ProfileDialog";
+import { ProfileDialog } from "../pages/user/ProfileDialog";
 import { useSession } from "../hooks/useSession";
 import { LocaleContext } from "../../context/localContext";
 

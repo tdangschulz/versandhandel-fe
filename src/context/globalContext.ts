@@ -21,7 +21,8 @@ export const defaultGlobalState = {
     products: [],
     premium: 0,
   },
-} as DefaultGlobalState;
+};
+
 export const GlobalStateContext = React.createContext(defaultGlobalState);
 
 export const DispatchStateContext = React.createContext<

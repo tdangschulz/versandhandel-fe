@@ -11,7 +11,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
 import theme from "../../commons/theme";
 import { useSession } from "../../hooks/useSession";
-import { ProfileDialog } from "../ProfileDialog";
+import { ProfileDialog } from "../user/ProfileDialog";
 
 function Copyright(props: any) {
   return (

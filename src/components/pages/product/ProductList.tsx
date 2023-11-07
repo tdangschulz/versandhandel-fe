@@ -12,11 +12,13 @@ import { Product } from "../../../models";
 import withRoot from "../../hocs/withRoot";
 import { ProductDialog } from "./ProductDialog";
 import { useGlobalState } from "../../../context/globalContext";
+import { LocaleContext } from "../../../context/localContext";
 
 const ProductDetails: React.FC = () => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
   const { state, dispatch } = useGlobalState();
+  const { locale } = React.useContext(LocaleContext);
 
   React.useEffect(() => {
     const fetch = async () => {
@@ -58,7 +60,7 @@ const ProductDetails: React.FC = () => {
       ></ProductDialog>
       <Grid container justifyContent="flex-end">
         <Button variant="outlined" onClick={addProduct} sx={{ mb: 2 }}>
-          Neues Produkt
+          {locale.newProduct}
         </Button>
         <Grid item xs={12} lg={12}>
           <TableContainer component={Paper}>
@@ -66,10 +68,10 @@ const ProductDetails: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Id</TableCell>
-                  <TableCell align="left">Produkt</TableCell>
-                  <TableCell align="left">Beschreibung</TableCell>
+                  <TableCell align="left">{locale.product}</TableCell>
+                  <TableCell align="left">{locale.description}</TableCell>
                   <TableCell sx={{ width: 100 }} align="right">
-                    Preis
+                    {locale.price}
                   </TableCell>
                   <TableCell align="right"></TableCell>
                 </TableRow>

@@ -6,8 +6,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Product } from "../../../../models";
+import { LocaleContext } from "../../../../context/localContext";
 
 type Props = {
   products: Product[];
@@ -16,6 +17,7 @@ type Props = {
 
 export const ShopTable: React.FC<Props> = ({ products, addingProduct }) => {
   const [selected, setSelected] = useState<Product>();
+  const { locale } = useContext(LocaleContext);
 
   useEffect(() => {
     console.log("rendering shop table");
@@ -41,10 +43,10 @@ export const ShopTable: React.FC<Props> = ({ products, addingProduct }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Id</TableCell>
-            <TableCell align="left">{"Product"}</TableCell>
-            <TableCell align="left">{"Description"}</TableCell>
+            <TableCell align="left">{locale.product}</TableCell>
+            <TableCell align="left">{locale.description}</TableCell>
             <TableCell sx={{ width: 100 }} align="right">
-              {"Price"}
+              {locale.price}
             </TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>

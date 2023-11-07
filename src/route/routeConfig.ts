@@ -8,6 +8,7 @@ import ProductList from "../components/pages/product/ProductList";
 import CustomersList from "../components/pages/user/CustomersList";
 import InvoiceList from "../components/pages/invoice/InvoiceList";
 import ParentComponent from "../Callback";
+import { ProfilePage } from "../components/pages/user/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -46,5 +47,10 @@ export const router = createBrowserRouter([
   {
     path: "/callback",
     Component: ParentComponent,
+  },
+
+  {
+    path: "/profile/:id",
+    Component: ProfilePage,
   },
 ]);
