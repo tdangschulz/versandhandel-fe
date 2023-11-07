@@ -13,26 +13,26 @@
 - user : 84496
 - Admin: 22222 Password: abc123
 
-## Aufgabe 1:
+## Aufgabe 1
 
 Als ein Benutzer möchte ich die Möglichkeit haben, markierte Produkte in der Produktliste durch Drücken der Taste 'A' auf meiner Tastatur direkt in den Warenkorb zu legen, damit ich eine schnellere und effizientere Einkaufserfahrung genießen kann, ohne die Maus benutzen zu müssen.
 
 Passen Sie den ShopTable.tsx mit [useEffect](https://react.dev/reference/react/useEffect) und [document.addEventListener()](https://www.w3schools.com/jsref/met_document_addeventlistener.asp) an, sodass ein markiertes Produkt in der Tabelle durch Drücken der Taste 'A' auf der Tastatur zum Warenkorb hinzugefügt werden kann.
 
-## Aufgabe 2:
+## Aufgabe 2
 
 Als Benutzer möchte ich, dass die Produkte in der Tabelle automatisch in alphabetischer Reihenfolge sortiert sind, damit ich eine geordnete Übersicht habe und schnell das gewünschte Produkt finden kann.
 
-Ändere dafür nicht die bestehende Liste, nutze dafür [useState](https://react.dev/reference/react/useState) und [useEffect](https://react.dev/reference/react/useEffect)
+Ändere dafür nicht die bestehende Liste, nutze dafür [useState](https://react.dev/reference/react/useState) und [useEffect](https://react.dev/reference/react/useEffect
 
-## Aufgabe 3:
+## Aufgabe 3
 
 Als Entwickler möchte ich, dass die Produkttabelle nur dann neu gerendert wird, wenn sich die Produktliste ändert,
 damit die Anwendungsleistung verbessert wird und unnötige Renderings vermieden werden.
 
 Nutze dafür [useMemo](https://react.dev/reference/react/useMemo) im `ShopPage.tsx`
 
-## Aufgabe 4:
+## Aufgabe 4
 
 Als Nutzer möchte ich beim Betreten der Produktauswahl-Seite, dass die Suchleiste automatisch fokusiert wird, damit ich sofort mit der Suche starten kann.
 
@@ -59,7 +59,9 @@ useEffect(() => {
 
 ## Wissenswertes zu Headless Components
 
-## Aufgabe Context API
+https://martinfowler.com/articles/headless-component.html
+
+## Aufgabe Context API - Locale
 
 Als Benutzer möchte ich die Fähigkeit haben, die Sprache der Anwendung zwischen Deutsch und Englisch zu wechseln. Dies soll intuitiv über einen Button möglich sein, der angezeigt wird, wenn ich auf mein Profilbild klicke. Auf diese Weise kann ich die Anwendung in der Sprache nutzen, die ich bevorzuge.
 
@@ -68,4 +70,28 @@ Der LocaleProvider soll eine Funktion switchLocale bereitstellen, die es ermögl
 Die Sprachänderung soll ohne Neuladen der Seite und unter Beibehaltung des aktuellen Anwendungszustands stattfinden.
 Nutzte die `locales.ts`-Datei
 
-https://martinfowler.com/articles/headless-component.html
+## Aufgabe Context API - Integration der Rechnungsdaten in den globalState
+
+Als Entwickler möchte ich, dass die Rechnungen in der `InvoiceList.tsx` Komponente nach demselben Muster im globalState abgelegt werden, wie es bereits bei den Produktdaten der Fall ist. Dies soll ein einheitliches Handling der verschiedenen Datentypen gewährleisten und mir erlauben, auf konsistente Weise auf die Rechnungsdaten von überall in der Anwendung aus zugreifen zu können.
+
+Extra: `CustomerList.tsx` auch anpassen
+
+## Aufgabe Redux
+
+Als Entwickler möchte ich, dass der bestehende globalContext, der derzeit mit der ContextAPI implementiert ist, zu Redux migriert wird. Ziel ist es, von den Vorteilen von Redux zu profitieren, wie zum Beispiel dem verbesserten State-Management, der Zeitreise-Fähigkeit für Debugging und dem Ökosystem an Middleware, um eine robustere und skalierbare Anwendungsarchitektur zu schaffen.
+
+Die Actions und reducer in der `reducer.ts` sollen alle zu redux migriert werden. Auch alle `dispatch` aufrufen sowie der userReducer-Hook und der globalState sind nach der Migration aus dem Code zu entfernen.
+
+Nutze für die Erstellung des Reducer die [`createSlice`](https://redux.js.org/tutorials/quick-start#create-a-redux-state-slice) Funktion aus `@reduxjs/toolkit`
+
+siehe [redux quick start](https://redux.js.org/tutorials/quick-start)
+
+<details>
+<summary> Fortgechrittene Redux Funktionen (Optional)</summary>
+Das Thema optinal!!
+
+Wer mehr über Redux und asynchrone Aufrufe erfahren möchten, kann sich folgende Links anschauen.
+
+- https://redux-toolkit.js.org/api/createAsyncThunk
+- https://dev.to/ifeanyichima/what-is-createasyncthunk-in-redux--mhe
+</details>
