@@ -13,7 +13,7 @@ export type DefaultGlobalState = {
   products: Product[];
 };
 
-export const defaultGlobalState = {
+export const defaultGlobalState: DefaultGlobalState = {
   products: [],
   shoppingCart: {
     total: 0,

@@ -17,31 +17,14 @@ import withRoot from "../../hocs/withRoot";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { ShopTable } from "./components/ShopTable";
 import { LocaleContext } from "../../../context/localContext";
+import { useProducts } from "../../hooks/useProducts";
 
 const ShopPage: FC = () => {
-  const { dispatch, state } = useGlobalState();
+  const { dispatch } = useGlobalState();
   const { locale } = useContext(LocaleContext);
-  const [sorted, setSorted] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const availableProducts = await getProducts();
-      dispatch({ type: "AVAILABLE_PRODUCTS", payload: availableProducts });
-    };
-
-    if (state.products.length === 0) {
-      fetch();
-    }
-  }, []);
-
-  useEffect(() => {
-    const sortedProducts = state.products.sort((a, b) =>
-      b.name > a.name ? -1 : 1
-    );
-    setSorted(sortedProducts);
-  }, [state.products]);
-
+  const { products } = useProducts();
   const inputRef = useRef<HTMLDivElement>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -52,14 +35,25 @@ const ShopPage: FC = () => {
   }, []);
 
   const table = useMemo(() => {
-    return <ShopTable addingProduct={addProduct} products={sorted}></ShopTable>;
-  }, [sorted]);
+    return (
+      <ShopTable
+        addingProduct={addProduct}
+        products={[...products].filter(
+          (p) =>
+            p.name.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
+            p.description?.toLowerCase().startsWith(searchTerm.toLowerCase())
+        )}
+      ></ShopTable>
+    );
+  }, [products, searchTerm]);
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container alignItems="start">
         <Grid item sm={12}>
           <TextField
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.currentTarget.value)}
             placeholder={locale.search}
             inputRef={inputRef}
           ></TextField>

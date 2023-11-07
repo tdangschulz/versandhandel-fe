@@ -7,26 +7,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
-import { getProducts } from "../../../api/product";
 import { Product } from "../../../models";
 import withRoot from "../../hocs/withRoot";
 import { ProductDialog } from "./ProductDialog";
 import { useGlobalState } from "../../../context/globalContext";
 import { LocaleContext } from "../../../context/localContext";
+import { useProducts } from "../../hooks/useProducts";
 
 const ProductDetails: React.FC = () => {
   const [showDialog, setShowDialog] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
-  const { state, dispatch } = useGlobalState();
+  const { dispatch } = useGlobalState();
   const { locale } = React.useContext(LocaleContext);
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      const availableProducts = await getProducts();
-      dispatch({ type: "AVAILABLE_PRODUCTS", payload: availableProducts });
-    };
-    fetch();
-  }, []);
+  const { products } = useProducts();
 
   const addProduct = () => {
     setSelectedProduct(undefined);
@@ -77,7 +70,7 @@ const ProductDetails: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {state.products.map((row) => (
+                {products.map((row) => (
                   <TableRow
                     key={row.name}
                     sx={{
