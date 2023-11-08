@@ -2,7 +2,7 @@ import * as React from "react";
 import { Product, Profile, ShoppingItem } from "../models";
 import { Action } from "./reducer";
 
-export type DefaultGlobalState = {
+export type GlobalState = {
   userInfo?: Profile;
   shoppingCart: {
     total: number;
@@ -13,7 +13,7 @@ export type DefaultGlobalState = {
   products: Product[];
 };
 
-export const defaultGlobalState: DefaultGlobalState = {
+export const defaultGlobalState: GlobalState = {
   products: [],
   shoppingCart: {
     total: 0,

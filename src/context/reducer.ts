@@ -1,4 +1,4 @@
-import { DefaultGlobalState } from "./globalContext";
+import { GlobalState } from "./globalContext";
 
 export type ACTIONS =
   | "ADD_ITEM"
@@ -14,7 +14,7 @@ export type Action = {
   payload: any;
 };
 
-export const reducer = (state: DefaultGlobalState, action: Action) => {
+export const reducer = (state: GlobalState, action: Action) => {
   switch (action.type) {
     case "DELETE_PRODUCT": {
       const product = action.payload;
