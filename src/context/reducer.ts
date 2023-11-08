@@ -27,7 +27,7 @@ export const reducer = (state: DefaultGlobalState, action: Action) => {
     case "UPSERT_PRODUCT": {
       const product = action.payload;
       const index = state.products.findIndex((p) => p.id === product.id);
-      if (index > 0) {
+      if (index != -1) {
         state.products[index] = product;
       } else {
         state.products.push(product);
